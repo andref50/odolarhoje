@@ -27,13 +27,13 @@ def main():
         text1 += f' de {variacao:.2f}% em relação à ontem.\n\n'
         text1 += '#cotacao #dolar'
         print(text1)
-        # post = client.send_post(text1)
+        post = client.send_post(text1)
 
     else:
         print(f'Erro ao obter o valor do dólar: {resposta.status_code}')
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(main, 'cron', hour=18, minute=55)
+scheduler.add_job(main, 'cron', hour=19, minute=35)
 
 
 if __name__ == '__main__':
