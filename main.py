@@ -33,7 +33,7 @@ def main():
         print(f'Erro ao obter o valor do dólar: {resposta.status_code}')
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(main, 'cron', hour=19, minute=35)
+scheduler.add_job(main, 'cron', hour=19, minute=40)
 
 
 if __name__ == '__main__':
