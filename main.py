@@ -3,6 +3,7 @@ import requests
 from atproto import Client
 from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def main():
@@ -34,6 +35,6 @@ def main():
 
 
 if __name__ == "__main__":
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(main, 'cron', hour=22, minute=42)
+    scheduler = BlockingScheduler()
+    scheduler.add_job(main, 'cron', hour=22, minute=50)
     scheduler.start()
