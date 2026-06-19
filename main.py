@@ -2,7 +2,7 @@ import os
 import requests
 import datetime
 import logging
-from atproto import Client
+from atproto import Client, client_utils
 from dotenv import load_dotenv
 from apscheduler.schedulers.blocking import BlockingScheduler
 
@@ -16,8 +16,9 @@ api_url = 'https://br.dolarapi.com/v1/cotacoes/usd'
 
 def principal():
     data_hoje = datetime.date.today().strftime('%d/%m/%Y')
-
     resposta = requests.get(api_url)
+
+    text_builder = client_utils.TextBuilder()
 
     if resposta.status_code == 200:
         dados = resposta.json()
@@ -29,10 +30,15 @@ def principal():
         text1 += f'💵 O dólar fechou em R${valor_dolar}\n'
         text1 += '📈 Alta ' if variacao > 0 else '📉 Baixa '
         text1 += 'de ' + f'{variacao:.2f}'.replace('.', ',') + '% em relação ao dia anterior\n\n'
-        text1 += '#cotacao #dolar'
+        # text1 += '#cotacao #dolar'
 
-        post = client.send_post(text1)
+        text_builder.text(text1)
+        text_builder.tag('#cotacao ', 'cotacao')
+        text_builder.tag('#dolar', 'dolar')   
+
+        post = client.send_post(text_builder)
         logger.info('Post enviado: ' + post.uri)
+
         print(text1)
     else:
         print(f'Erro ao obter o valor do dólar: {resposta.status_code}')
