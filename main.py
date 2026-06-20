@@ -30,7 +30,6 @@ def principal():
         text1 += f'💵 O dólar fechou em R${valor_dolar}\n'
         text1 += '📈 Alta ' if variacao > 0 else '📉 Baixa '
         text1 += 'de ' + f'{variacao:.2f}'.replace('.', ',') + '% em relação ao dia anterior\n\n'
-        # text1 += '#cotacao #dolar'
 
         text_builder.text(text1)
         text_builder.tag('#cotacao ', 'cotacao')
@@ -74,8 +73,8 @@ if __name__ == "__main__":
 
 
     scheduler = BlockingScheduler()
-    scheduler.add_job(principal, 'cron', hour=18, minute=45, timezone='America/Sao_Paulo')
-    scheduler.add_job(rebluite, 'cron', hour=10, timezone='America/Sao_Paulo')
+    scheduler.add_job(principal, 'cron', hour=18, minute=45, day_of_week='mon-fri', timezone='America/Sao_Paulo')
+    scheduler.add_job(rebluite, 'cron', hour=10, day_of_week='tue-fri', timezone='America/Sao_Paulo')
 
     scheduler.start()
 
